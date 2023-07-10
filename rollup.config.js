@@ -6,7 +6,7 @@ import json from "@rollup/plugin-json";
 export default {
   input: "src/main.ts",
   output: {
-    dir: "dist/",
+    dir: "/",
     sourcemap: "inline",
     format: "cjs",
     exports: "default",
