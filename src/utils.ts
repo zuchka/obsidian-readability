@@ -75,5 +75,5 @@ export function formatFRE(score: number): string {
       break;      
   }
 
-  return 'r9y:' + output
+  return 'r9y: ' + output
 }
