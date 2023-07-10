@@ -1,6 +1,6 @@
 {
   "name": "readability-score",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "Score the readabilty of your writing using the Flesch Reading Ease (FRE) formula.",
   "main": "main.js",
   "scripts": {
