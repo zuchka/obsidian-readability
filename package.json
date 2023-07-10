@@ -1,7 +1,7 @@
 {
   "name": "readability-score",
-  "version": "0.1.0",
-  "description": "Counts the words of selected text in the editor.",
+  "version": "0.1.1",
+  "description": "Score the readabilty of your writing using the Flesch Reading Ease (FRE) formula.",
   "main": "main.js",
   "scripts": {
     "lint": "eslint . --ext .ts",
