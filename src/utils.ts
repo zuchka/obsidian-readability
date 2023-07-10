@@ -47,3 +47,33 @@ export function getSentenceCount(text: string): number {
 export function cleanComments(text: string): string {
   return text.replace(MATCH_COMMENT, "").replace(MATCH_HTML_COMMENT, "");
 }
+
+export function formatFRE(score: number): string {
+  const rounded = Math.round(score * 100) / 100
+  let output = ''
+  switch (true) {
+    case (90 <= rounded):
+      output = rounded + ', or "very easy to read"'
+      break;
+    case (80 <= rounded):
+      output = rounded + ', or "easy to read"'
+      break;
+    case (70 <= rounded):
+      output = rounded + ', or "fairly easy to read"'
+      break;
+    case (60 <= rounded):
+      output = rounded + ', or "plain English"'
+      break;  
+    case (50 <= rounded):
+      output = rounded + ', or "fairly difficult to read"'
+      break;
+    case (30 <= rounded):
+      output = rounded + ', or "difficult to read"'
+      break;
+    case (10 <= rounded):
+      output = rounded + ', or "very difficult to read"'
+      break;      
+  }
+
+  return 'r9y:' + output
+}

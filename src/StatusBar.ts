@@ -2,7 +2,7 @@ import { debounce } from "obsidian";
 import RemoveMarkdown from "remove-markdown";
 import {syllable} from "syllable"
 import {flesch} from 'flesch'
-import { getWordCount, getSentenceCount } from "./utils";
+import { getWordCount, getSentenceCount, formatFRE } from "./utils";
 
 export default class StatusBar {
   private statusBarEl: HTMLElement;
@@ -44,32 +44,8 @@ export default class StatusBar {
     const words = getWordCount(plainText)
     const sentences = getSentenceCount(plainText)
     const fleschCount = flesch({sentence: sentences, word: words, syllable: syllables})
-    const rounded = Math.round(fleschCount * 100) / 100
-
-    let output = ''
-    switch (true) {
-      case (90 <= rounded):
-        output = rounded + ', or "very easy to read"'
-        break;
-      case (80 <= rounded):
-        output = rounded + ', or "easy to read"'
-        break;
-      case (70 <= rounded):
-        output = rounded + ', or "fairly easy to read"'
-        break;
-      case (60 <= rounded):
-        output = rounded + ', or "plain English"'
-        break;  
-      case (50 <= rounded):
-        output = rounded + ', or "fairly difficult to read"'
-        break;
-      case (30 <= rounded):
-        output = rounded + ', or "difficult to read"'
-        break;
-      case (10 <= rounded):
-        output = rounded + ', or "very difficult to read"'
-        break;      
-    }
+    const output = formatFRE(fleschCount)
+    
     this.displayText(output);
   }
 }
