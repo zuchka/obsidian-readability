@@ -31,32 +31,30 @@ class EditorPlugin implements PluginValue {
     const userEventTypeUndefined =
       tr.annotation(Transaction.userEvent) === undefined;
 
-    if (
-      (tr.isUserEvent("select") || userEventTypeUndefined) &&
-      tr.newSelection.ranges[0].from !== tr.newSelection.ranges[0].to
-    ) {
-      let text = "";
-      const selection = tr.newSelection.main;
-      const textIter = tr.newDoc.iterRange(selection.from, selection.to);
-      while (!textIter.done) {
-        text = text + textIter.next().value;
+    try {
+      if (
+        (tr.isUserEvent("select") || userEventTypeUndefined) &&
+        tr.newSelection.ranges[0].from !== tr.newSelection.ranges[0].to
+      ) {
+        // Handle selected text
+        const selection = tr.newSelection.main;
+        const text = tr.newDoc.sliceString(selection.from, selection.to);
+        this.plugin.statusBar.debounceStatusBarUpdate(text);
+      } else if (
+        tr.isUserEvent("input") ||
+        tr.isUserEvent("delete") ||
+        tr.isUserEvent("move") ||
+        tr.isUserEvent("undo") ||
+        tr.isUserEvent("redo") ||
+        tr.isUserEvent("select")
+      ) {
+        // Handle full document
+        const text = tr.newDoc.toString();
+        this.plugin.statusBar.debounceStatusBarUpdate(text);
       }
-      this.plugin.statusBar.debounceStatusBarUpdate(text);
-    } else if (
-      tr.isUserEvent("input") ||
-      tr.isUserEvent("delete") ||
-      tr.isUserEvent("move") ||
-      tr.isUserEvent("undo") ||
-      tr.isUserEvent("redo") ||
-      tr.isUserEvent("select")
-    ) {
-      const textIter = tr.newDoc.iter();
-      let text = "";
-      while (!textIter.done) {
-        text = text + textIter.next().value;
-      }
-
-      this.plugin.statusBar.debounceStatusBarUpdate(text);
+    } catch (error) {
+      console.error('Error processing editor update:', error);
+      this.plugin.statusBar.displayText('r9y: error processing text');
     }
   }
 
