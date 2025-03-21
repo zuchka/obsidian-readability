@@ -1,7 +1,7 @@
 {
   "id": "readability-score",
   "name": "Readability Score",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Score the readabilty of your writing using the Flesch Reading Ease (FRE) formula.",
   "author": "zuchka",
   "authorUrl": "https://github.com/zuchka",
